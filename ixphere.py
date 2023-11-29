@@ -14,24 +14,19 @@ if __name__ == "__main__":
     N_PESSOAS, N_VAGAS, PERMANENCIA, MAX_INTERVALO, SEMENTE, UNID_TEMPO = map(int, sys.argv[1:])
     random.seed(SEMENTE)
 
-    if N_PESSOAS < 1:
-        print("<N_PESSOAS> precisa ser maior que 0.")
-        sys.exit()
-    if N_VAGAS < 1:
-        print("<N_VAGAS> precisa ser maior que 0.")
-        sys.exit()
-    if PERMANENCIA < 1:
-        print("<PERMANENCIA> precisa ser maior que 0.")
-        sys.exit()
-    if MAX_INTERVALO < 1:
-        print("<PERMANENCIA> precisa ser maior a 0.")
-        sys.exit()
-    if SEMENTE < 0:
-        print("<PERMANENCIA> precisa ser maior ou igual a 0.")
-        sys.exit()
-    if UNID_TEMPO < 1:
-        print("<UNID_TEMPO> precisa ser  maior que 0.")
-        sys.exit()
+    arg_rules = [
+        ('<N_PESSOAS>', 1),
+        ('<N_VAGAS>', 1),
+        ('<PERMANENCIA>', 1),
+        ('<MAX_INTERVALO>', 1),
+        ('<SEMENTE>', 0),
+        ('<UNID_TEMPO>', 1),
+    ]
+
+    for i, arg in enumerate(sys.argv[1:]):
+        if int(arg) < arg_rules[i][1]:
+            print(f"{arg_rules[i][0]} precisa ser maior ou igual a {arg_rules[i][1]}.")
+            sys.exit()
 
     ixfera = Ixfera(N_VAGAS, PERMANENCIA)
 
