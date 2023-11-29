@@ -14,6 +14,25 @@ if __name__ == "__main__":
     N_PESSOAS, N_VAGAS, PERMANENCIA, MAX_INTERVALO, SEMENTE, UNID_TEMPO = map(int, sys.argv[1:])
     random.seed(SEMENTE)
 
+    if N_PESSOAS < 1:
+        print("<N_PESSOAS> precisa ser maior que 0.")
+        sys.exit()
+    if N_VAGAS < 1:
+        print("<N_VAGAS> precisa ser maior que 0.")
+        sys.exit()
+    if PERMANENCIA < 1:
+        print("<PERMANENCIA> precisa ser maior que 0.")
+        sys.exit()
+    if MAX_INTERVALO < 1:
+        print("<PERMANENCIA> precisa ser maior a 0.")
+        sys.exit()
+    if SEMENTE < 0:
+        print("<PERMANENCIA> precisa ser maior ou igual a 0.")
+        sys.exit()
+    if UNID_TEMPO < 1:
+        print("<UNID_TEMPO> precisa ser  maior que 0.")
+        sys.exit()
+
     ixfera = Ixfera(N_VAGAS, PERMANENCIA)
 
     pessoas = []
@@ -32,6 +51,7 @@ if __name__ == "__main__":
 
     fim_simulacao = time.time()
 
+    ixfera.finalizar_simulacao()
     tempo_total_simulacao = fim_simulacao - inicio_simulacao
     taxa_ocupacao = ixfera.pessoas_na_ixfera / tempo_total_simulacao
     tempo_medio_espera = {'A': 0, 'B': 0, 'C': 0}
