@@ -23,12 +23,12 @@ class Ixfera:
             print(f"[Ixfera] Iniciando a experiencia {faixa_etaria}.")
 
     def entrar_na_ixfera(self, pessoa):
-        if (self.experiencia_em_curso == None):
+        if self.experiencia_em_curso == None:
             self.iniciar_experiencia(pessoa.faixa_etaria)
-        elif (self.experiencia_em_curso != pessoa.faixa_etaria):
+        elif self.experiencia_em_curso != pessoa.faixa_etaria or self.full():
             self.novo_show_sem.acquire()   # espera condicao de fim do show
             self.iniciar_experiencia(pessoa.faixa_etaria)
-        
+
         with self.mutex:    # precisa de lock pois pode haver alguem saindo
             self.pessoas_na_ixfera +=1
             print(f"[Pessoa {pessoa.numero} / {pessoa.faixa_etaria}] Entrou na Ixfera (quantidade = {self.pessoas_na_ixfera}).")
