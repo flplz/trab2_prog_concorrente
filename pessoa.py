@@ -14,7 +14,7 @@ class Pessoa(threading.Thread):
         self.max_intervalo = max_intervalo
         self.unid_tempo = unid_tempo
         self.wait_time = 0
-
+        
     def run(self):
         time.sleep(random.randint(1, self.max_intervalo) * self.unid_tempo)  # Simula o tempo de chegada
 

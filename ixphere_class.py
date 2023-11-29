@@ -12,8 +12,7 @@ class Ixfera:
         self.pessoas_na_ixfera = 0
         self.mutex = threading.Lock()
         self.queue_sem = threading.Semaphore()
-        self.enter_sem = threading.Semaphore(0)
-        self.cond_var = threading.Condition(lock=self.mutex)
+        self.novo_show_sem = threading.Semaphore(0)
 
     def full(self):
         return self.pessoas_na_ixfera == self.n_vagas
@@ -24,11 +23,17 @@ class Ixfera:
             print(f"[Ixfera] Iniciando a experiencia {faixa_etaria}.")
 
     def entrar_na_ixfera(self, pessoa):
-
-        self.pessoas_na_ixfera +=1
-        print(f"[Pessoa {pessoa.numero} / {pessoa.faixa_etaria}] Entrou na Ixfera (quantidade = {self.pessoas_na_ixfera}).")
         if (self.experiencia_em_curso == None):
             self.iniciar_experiencia(pessoa.faixa_etaria)
+        elif (self.experiencia_em_curso != pessoa.faixa_etaria):
+            self.novo_show_sem.acquire()   # espera condicao de fim do show
+            self.iniciar_experiencia(pessoa.faixa_etaria)
+        
+        with self.mutex:    # precisa de lock pois pode haver alguem saindo
+            self.pessoas_na_ixfera +=1
+            print(f"[Pessoa {pessoa.numero} / {pessoa.faixa_etaria}] Entrou na Ixfera (quantidade = {self.pessoas_na_ixfera}).")
+
+        self.queue_sem.release()    # libera para a proxima pessoa da fila
 
     def sair_da_ixfera(self, pessoa):
         with self.mutex:
@@ -38,10 +43,11 @@ class Ixfera:
             if self.pessoas_na_ixfera == 0:
                 self.experiencia_em_curso = None
                 print(f"[Ixfera] Pausando a experiencia {pessoa.faixa_etaria}.")
-                self.enter_sem.release()
+                self.novo_show_sem.release() # notifica quem esta esperando que a experiencia acabou
 
     def entrar_na_fila(self, pessoa):
         print(f"[Pessoa {pessoa.numero} / {pessoa.faixa_etaria}] Aguardando na fila.")
+        self.queue_sem.acquire()
 
     def finalizar_simulacao(self):
         print("[Ixfera] Simulacao finalizada.")
