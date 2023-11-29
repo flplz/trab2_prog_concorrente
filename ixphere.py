@@ -37,7 +37,8 @@ if __name__ == "__main__":
 
     pessoas = []
     for i in range(1, N_PESSOAS + 1):
-        faixa_etaria = 'A' if i % 3 == 1 else 'B' if i % 3 == 2 else 'C'
+        faixa_etaria = random.randint(0, 2)
+        faixa_etaria = 'A' if faixa_etaria == 0 else 'B' if faixa_etaria == 1 else 'C'
         pessoa = Pessoa(i, faixa_etaria, ixfera, MAX_INTERVALO, UNID_TEMPO)
         pessoas.append(pessoa)
 
