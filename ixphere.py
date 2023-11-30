@@ -48,11 +48,14 @@ if __name__ == "__main__":
     fim_simulacao = time.time()
 
     ixfera.finalizar_simulacao()
+
+    # Calcula taxa de ocupacao
     tempo_total_simulacao = fim_simulacao - inicio_simulacao
     taxa_ocupacao = ixfera.tempo_atracao / tempo_total_simulacao
 
     tempo_medio_espera = {'A': 0., 'B': 0., 'C': 0.}
 
+    # Calcula tempo medio de espera
     for pessoa in pessoas:
         tempo_medio_espera[pessoa.faixa_etaria] += pessoa.wait_time * pessoa.unid_tempo
 

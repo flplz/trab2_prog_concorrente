@@ -1,8 +1,5 @@
 import threading
 import time
-import random
-import queue
-import sys
 
 class Ixfera:
     def __init__(self, n_vagas, permanencia):

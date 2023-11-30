@@ -1,8 +1,6 @@
 import threading
 import time
 import random
-import queue
-import sys
 from ixphere_class import Ixfera
 
 class Pessoa(threading.Thread):
@@ -10,7 +8,7 @@ class Pessoa(threading.Thread):
         super().__init__()
         self.numero = numero
         self.faixa_etaria = faixa_etaria
-        self.ixfera = ixfera  # botar global
+        self.ixfera = ixfera
         self.max_intervalo = max_intervalo
         self.unid_tempo = unid_tempo
         self.show_time = 0
