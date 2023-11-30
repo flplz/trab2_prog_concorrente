@@ -29,7 +29,7 @@ class Ixfera:
         pessoa.wait_time = time.time() - pessoa.entrada_fila
         with self.mutex:    # precisa de lock pois pode haver alguem saindo
             self.pessoas_na_ixfera +=1
-            print(f"[Pessoa {pessoa.numero} / {pessoa.faixa_etaria}] Entrou na Ixfera (esperando = {pessoa.wait_time}) (quantidade = {self.pessoas_na_ixfera}).")
+            print(f"[Pessoa {pessoa.numero} / {pessoa.faixa_etaria}] Entrou na Ixfera (quantidade = {self.pessoas_na_ixfera}).")
 
         self.iniciar_experiencia(pessoa.faixa_etaria)
 
